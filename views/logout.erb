@@ -1,7 +1,7 @@
 <h1>Welcome <%= current_user[:username] %></h1>
 
 <ul>
-  <%= @contact_database.find_for_user(current_user[:id]) %>
+  <%= @contact_database.find_for_user(session[:id]) %>
 </ul>
 
 <form method="post" action="/">

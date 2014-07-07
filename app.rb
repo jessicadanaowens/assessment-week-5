@@ -41,7 +41,6 @@ class ContactsApp < Sinatra::Base
   end
 
   post "/sessions" do
-    @user_database.insert(username: params[:username], password: params[:password])
     session[:id] = find_user[:id] if find_user
     redirect "/"
   end
