@@ -10,7 +10,6 @@ class ContactsApp < Sinatra::Base
     super
     @contact_database = ContactDatabase.new
     @user_database = UserDatabase.new
-    @users = Database.new
 
     jeff = @user_database.insert(username: "Jeff", password: "jeff123")
     hunter = @user_database.insert(username: "Hunter", password: "puglyfe")
@@ -34,22 +33,26 @@ class ContactsApp < Sinatra::Base
   end
 
   post "/sessions" do
-    @users.insert(username: params[:username], password: params[:password])
+    @user_database.insert(username: params[:username], password: params[:password])
     session[:id] = find_user[:id] if find_user
-    redirect '/'
+    redirect "/"
+  end
+
+  get "/logout" do
+    erb :logout
   end
 
   private
 
-  def find_user(params)
-    @users.find { |user|
+  def find_user
+    @user_database.select { |user|
       user[:username] == params[:username] && user[:password] == params[:password]
-    }
+    }.first
   end
 
   def current_user
     if session[:id]
-      @users.find(session[:user_id])
+      @user_database.find(session[:user_id])
     end
   end
 end
