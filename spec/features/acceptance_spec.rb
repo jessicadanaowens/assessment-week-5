@@ -4,6 +4,7 @@ feature "Homepage" do
     visit "/"
 
     expect(page).to have_content("Contacts")
+    expect(page).to have_content("Login")
   end
 end
 
